@@ -38,4 +38,18 @@ inline SimpleTypeRef simpleType_(const String &codeType, TypeRef parent = nullpt
   return SimpleType::create(codeType, parent);
 }
 
+class BuiltinType {
+  public:
+    static SimpleTypeRef Int;
+    static SimpleTypeRef UInt;
+    static SimpleTypeRef Float;
+    static SimpleTypeRef Double;
+    static SimpleTypeRef Char;
+    static SimpleTypeRef Long;
+    static SimpleTypeRef ULong;
+    static SimpleTypeRef Short;
+    static SimpleTypeRef UShort;
+    static SimpleTypeRef Void;
+};
+
 #endif // SIMPLETYPE_HPP

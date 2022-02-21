@@ -20,6 +20,7 @@
 #include "Function.hpp"
 #include "RawCode.hpp"
 #include "Macro.hpp"
+#include "Argument.hpp"
 
 #include "FlowControl.hpp"
 #include "While.hpp"

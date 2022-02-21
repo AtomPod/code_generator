@@ -1,4 +1,5 @@
 SOURCES += \
+        $$PWD/src/Argument.cpp \
         $$PWD/src/Array.cpp \
         $$PWD/src/Code.cpp \
         $$PWD/src/CodeBlock.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
         $$PWD/src/While.cpp \
 
 HEADERS += \
+  $$PWD/include/code_generator/Argument.hpp \
   $$PWD/include/code_generator/Array.hpp \
   $$PWD/include/code_generator/Code.hpp \
   $$PWD/include/code_generator/CodeBlock.hpp \
