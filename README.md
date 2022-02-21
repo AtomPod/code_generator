@@ -1,6 +1,12 @@
 # code_generator
 code_genrator 是一个由C++编写的C/C++语言代码生成器，支持struct、enum、函数、变量等等创建支持。使用对象方式进行创建，复用代码片段支持。
 
+# C++支持
+- ### C++11
+
+# 外部库
+- ### fmtlib https://github.com/fmtlib/fmt
+
 # 代码示例
 ## 1. struct 结构体创建
 ### 代码
