@@ -32,4 +32,8 @@ class Ref : public Type
     }
 };
 
+inline RefRef ref_(TypeRef parent) {
+    return Ref::create(parent);
+}
+
 #endif // REF_HPP
