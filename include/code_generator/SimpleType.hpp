@@ -38,6 +38,10 @@ inline SimpleTypeRef simpleType_(const String &codeType, TypeRef parent = nullpt
   return SimpleType::create(codeType, parent);
 }
 
+inline SimpleTypeRef type_(const String &codeType, TypeRef parent = nullptr) {
+  return SimpleType::create(codeType, parent);
+}
+
 class BuiltinType {
   public:
     static SimpleTypeRef Int;

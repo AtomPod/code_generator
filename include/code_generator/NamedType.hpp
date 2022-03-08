@@ -52,4 +52,8 @@ inline NamedTypeRef namedType_(const String &name, TypeRef parent) {
   return NamedType::create(name, parent);
 }
 
+inline NamedTypeRef field_(const String &name, TypeRef parent) {
+  return NamedType::create(name, parent);
+}
+
 #endif // NAMEDTYPE_HPP

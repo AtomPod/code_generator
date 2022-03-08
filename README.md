@@ -14,8 +14,8 @@ code_genrator 是一个由C++编写的C/C++语言代码生成器，支持struct�
 StringCodeWriter writer;
 
 auto person = struct_({
-	namedType_("age", simpleType_("int")),
-	namedType_("name", array_(simpleType_("char"), 20))
+	field_("age", type_("int")),
+	field_("name", array_(type_("char"), 20))
 }, "person");
 
 person->write(writer);
@@ -34,14 +34,14 @@ struct person {
 StringCodeWriter writer;
 
 auto fn = func_("print",
-				simpleType_("void"),
-				{
-					namedType_("value", simpleType_("int")),
-				},
-				{
-					var_("tmp", simpleType_("int"))->definition()->assign($("value")),
-					$("std::cout << tmp << '\\n'")
-				});
+	type_("void"),
+	{
+		argument_("value", type_("int")),
+	},
+	{
+		var_("tmp", type_("int"))->definition()->assign($("value")),
+		$("std::cout << tmp << '\\n'")
+	});
 
 fn->write(writer);
 std::cout << writer.str() << '\n';
