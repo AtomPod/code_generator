@@ -62,6 +62,7 @@ HEADERS += \
   $$PWD/include/code_generator/Types.hpp \
   $$PWD/include/code_generator/Var.hpp \
   $$PWD/include/code_generator/While.hpp \
+  $$PWD/include/code_generator/Return.hpp
 
 INCLUDEPATH += $$PWD/include
 

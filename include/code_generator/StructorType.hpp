@@ -50,6 +50,9 @@ class StructorType : public BlockTypeDefinition {
     virtual ~StructorType() override;
 
   public:
+    const MembersContainer &fields() const { return codeContainer(); }
+
+  public:
     virtual int typeWrite(Dequque &leftSide, Dequque &rightSide) override;
 
     virtual uint16_t id() const override {

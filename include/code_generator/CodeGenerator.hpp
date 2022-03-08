@@ -27,6 +27,7 @@
 #include "Evaluate.hpp"
 #include "Var.hpp"
 #include "Lit.hpp"
+#include "Return.hpp"
 
 #include "StringCodeWriter.hpp"
 
