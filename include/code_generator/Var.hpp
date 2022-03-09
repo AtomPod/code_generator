@@ -9,6 +9,7 @@
 #define VAR_HPP
 
 #include "NamedType.hpp"
+#include <vector>
 
 class Var;
 typedef RefObject<Var> VarRef;
@@ -17,6 +18,14 @@ class VarDefinition;
 typedef RefObject<VarDefinition> VarDefinitionRef;
 
 class VarDefinition : public Code, public EnableSharedRefObject<VarDefinition> {
+public:
+    enum AssignKind {
+        EQUAL,
+        CONSTRUCTOR
+    };
+
+    typedef std::vector<CodeRef> CodeRefList;
+
 public:
   static const uint16_t ID;
 
@@ -42,10 +51,17 @@ public:
 
 public:
   VarDefinitionRef assign(const CodeRef &code);
+  VarDefinitionRef construct(const CodeRef &code);
+  VarDefinitionRef construct(const CodeRefList &codes);
+
+protected:
+  AssignKind assignKind() const;
+  void setAssignKind(const AssignKind &assignKind);
 
 private:
   NamedTypeRef m_namedType;
   CodeRef m_value;
+  AssignKind m_assignKind;
 };
 
 class Var : public Code, public EnableSharedRefObject<Var>

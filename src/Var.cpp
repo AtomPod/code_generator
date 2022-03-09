@@ -1,6 +1,7 @@
 ﻿#include "code_generator/Var.hpp"
 #include "code_generator/Array.hpp"
 #include "code_generator/Ptr.hpp"
+#include "code_generator/Evaluate.hpp"
 #include "fmt/format.h"
 #include "code_generator/StringCodeWriter.hpp"
 #include <stdexcept>
@@ -156,8 +157,14 @@ int VarDefinition::write(CodeWriter &writer)
 {
    m_namedType->write(writer);
   if (value() != nullptr) {
-    writer.writeString("$s=$s");
-    value()->write(writer);
+    if (assignKind() == AssignKind::EQUAL) {
+      writer.writeString("$s=$s");
+      value()->write(writer);
+    } else {
+      writer.writeString("(");
+      value()->write(writer);
+      writer.writeString(")");
+    }
   }
   return 0;
 }
@@ -188,5 +195,37 @@ String VarDefinition::name() const
 VarDefinitionRef VarDefinition::assign(const CodeRef &code)
 {
   VarDefinitionRef vardef = VarDefinition::create(name(), type(), code);
+  vardef->setAssignKind(AssignKind::EQUAL);
   return vardef;
+}
+
+VarDefinitionRef VarDefinition::construct(const CodeRef &code)
+{
+    VarDefinitionRef vardef = VarDefinition::create(name(), type(), code);
+    vardef->setAssignKind(AssignKind::CONSTRUCTOR);
+    return vardef;
+}
+
+VarDefinitionRef VarDefinition::construct(const VarDefinition::CodeRefList &codes)
+{
+    StringCodeWriter writer;
+    for (size_t i = 0; i < codes.size(); ++i) {
+        if (i != 0) {
+          writer.writeString(",$s");
+        }
+
+        auto& code = codes[i];
+        code->write(writer);
+    }
+    return construct($(writer.str()));
+}
+
+VarDefinition::AssignKind VarDefinition::assignKind() const
+{
+    return m_assignKind;
+}
+
+void VarDefinition::setAssignKind(const AssignKind &assignKind)
+{
+    m_assignKind = assignKind;
 }
