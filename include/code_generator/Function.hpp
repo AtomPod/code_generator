@@ -75,4 +75,8 @@ inline FunctionRef func_(const String &name,
   return Function::create(name, ret, params, codeContainer);
 }
 
+CodeRef call_(const String &name,
+             const Function::CodeContainer &codeContainer,
+             const VarRef &var = nullptr);
+
 #endif // FUNCTION_HPP

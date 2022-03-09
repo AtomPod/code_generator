@@ -67,6 +67,9 @@ private:
 class Var : public Code, public EnableSharedRefObject<Var>
 {
 public:
+    typedef std::vector<CodeRef> CodeContainer;
+
+public:
   static const uint16_t ID;
 
 public:
@@ -106,6 +109,14 @@ public:
    * @return 若不能取地址，那么直接返回nullptr
    */
   VarRef address();
+
+  /**
+   * @brief call
+   * @param name
+   * @param container
+   * @return
+   */
+  CodeRef call(const String &name, const CodeContainer &container);
 
 public:
   virtual String toString() override;

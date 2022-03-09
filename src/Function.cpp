@@ -64,7 +64,7 @@ CodeRef Function::call(const CodeBlock::CodeContainer &codeContainer, const VarR
 
 VarRef Function::var()
 {
-  return Var::create(name(), type());
+    return Var::create(name(), type());
 }
 
 void Function::setName(const String &name)
@@ -77,4 +77,27 @@ String Function::name() const
   return m_namedFunc->name();
 }
 
-
+CodeRef call_(const String &name, const CodeBlock::CodeContainer &codeContainer, const VarRef &var) {
+    StringCodeWriter writer;
+    if (var != nullptr) {
+      writer.writeString(var->name());
+      TypeRef typ = var->type();
+      // TODO 检查类型是否是有调用能力得
+      if (typ->id() == Ptr::ID) {
+        writer.writeString("->");
+      } else {
+        writer.writeString(".");
+      }
+    }
+    writer.writeString(name);
+    writer.writeString("(");
+    for (size_t i = 0; i < codeContainer.size(); ++i) {
+      auto &code = codeContainer[i];
+      code->write(writer);
+      if (i != codeContainer.size() - 1) {
+        writer.writeString(",$s");
+      }
+    }
+    writer.writeString(")");
+    return RawCode::create(writer.str(), Function::CodeType_Var);
+}

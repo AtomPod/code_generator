@@ -2,6 +2,7 @@
 #include "code_generator/Array.hpp"
 #include "code_generator/Ptr.hpp"
 #include "code_generator/Evaluate.hpp"
+#include "code_generator/Function.hpp"
 #include "fmt/format.h"
 #include "code_generator/StringCodeWriter.hpp"
 #include <stdexcept>
@@ -91,6 +92,11 @@ VarRef Var::address()
 
   String eName = fmt::format("&{}", name());
   return Var::create(eName, Ptr::create(p));
+}
+
+CodeRef Var::call(const String &name, const Var::CodeContainer &container)
+{
+  return call_(name, container, shared_from_this());
 }
 
 String Var::toString()

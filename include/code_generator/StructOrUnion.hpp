@@ -31,6 +31,7 @@ class Struct : public StructorType {
 
   public:
     typedef std::vector<FunctionRef> FunctionContainer;
+    typedef std::vector<FieldRef> FieldContainer;
 
   public:
     static const uint16_t ID;
@@ -55,6 +56,20 @@ class Struct : public StructorType {
     void addFunction(const Permission &permission, FunctionRef func);
 
     /**
+     * @brief addField 添加成员字段
+     * @param persmission
+     * @param field
+     */
+    void addField(const Permission &persmission, FieldRef field);
+
+    /**
+     * @brief addFields 批量添加成员字段
+     * @param persmission
+     * @param container
+     */
+    void addFields(const Permission &persmission, const FieldContainer &container);
+
+    /**
      * @brief typeWrite
      * @param larea
      * @param rarea
@@ -64,9 +79,11 @@ class Struct : public StructorType {
 
   protected:
     void addPermissionFunc(Permission p, const FunctionContainer &container);
+    void addPermissionField(Permission p, const FieldContainer &container);
 
   private:
     FunctionContainer m_functions[PERMISSION_COUNT];
+    FieldContainer m_fields[PERMISSION_COUNT];
 };
 
 /**
