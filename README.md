@@ -14,8 +14,8 @@ code_genrator 是一个由C++编写的C/C++语言代码生成器，支持struct�
 StringCodeWriter writer;
 
 auto person = struct_({
-	field_("age", type_("int")),
-	field_("name", array_(type_("char"), 20))
+	field_("age", BuiltinType::Int),
+	field_("name", array_(BuiltinType::Char, 20))
 }, "person");
 
 person->write(writer);
@@ -33,9 +33,9 @@ struct person {
 ```C++11
 StringCodeWriter writer;
 
-auto fn = func_("print", type_("void"), { argument_("value", type_("int")) },
+auto fn = func_("print", BuiltinType::Void, { argument_("value", BuiltinType::Int) },
 	{
-		var_("tmp", type_("int"))->definition()->assign($("value")),
+		var_("tmp", BuiltinType::Int)->definition()->assign($("value")),
 		$("std::cout << tmp << '\\n'")
 	});
 
@@ -53,45 +53,48 @@ void print(int value) {
 ### 代码
 ```C++11
 FunctionRef CreateEncodeFunc(StructRef stc, const char *fnName) {
-    const String thiz = "thiz";
     auto buffer = var_("buffer", type_("QByteArray"));
+    auto rbuffer = var_("rbuffer", type_("QBuffer"));
+    auto stream = var_("stream", type_("QDataStream"));
+    auto callStatus = stream->call("status", {});
 
     auto personFields = stc->fields();
     Function::CodeContainer container;
     container.push_back(buffer->definition());
-    container.push_back($("QBuffer$srbuffer(&{});", buffer->name()));
-    container.push_back($("rbuffer.open(QBuffer::ReadWrite);"));
-    container.push_back($("QDataStream$sstream(&rbuffer);"));
+    container.push_back(rbuffer->definition()->construct(buffer->address()));
+    container.push_back(rbuffer->call("open", { $("QBuffer::ReadWrite") }));
+    container.push_back(stream->definition()->construct(rbuffer->address()));
     for (const auto &field : personFields) {
         FieldRef nfield = std::reinterpret_pointer_cast<Field>(field);
-        container.push_back($("stream$s<<$s{}->{};", thiz, nfield->name()));
+        container.push_back($("stream$s<<$s{};", nfield->name()));
         container.push_back(
-        if_($("stream.status() != QDataStream::Ok"), {
+        if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
             return_("QByteArray()"),
         }));
     }
     container.push_back(return_(buffer->name()));
-    return func_(fnName, type_("QByteArray"), { argument_(thiz, ptr_(stc->declare())) }, container);
+    return func_(fnName, type_("QByteArray"), {}, container);
 }
 
 FunctionRef CreateDecodeFunc(StructRef stc, const char *fnName) {
-    const String thiz = "thiz";
+
     auto buffer = var_("buffer", type_("QByteArray"));
+    auto stream = var_("stream", type_("QDataStream"));
+    auto callStatus = stream->call("status", {});
 
     auto personFields = stc->fields();
     Function::CodeContainer decodeContainer;
-    decodeContainer.push_back($("QDataStream$sstream({});", buffer->name()));
+    decodeContainer.push_back(stream->definition()->construct(buffer));
     for (const auto &field : personFields) {
         FieldRef nfield = std::reinterpret_pointer_cast<Field>(field);
-        decodeContainer.push_back($("stream$s>>$s{}->{};", thiz, nfield->name()));
+        decodeContainer.push_back($("stream$s>>$s{};", nfield->name()));
         decodeContainer.push_back(
-        if_($("stream.status() != QDataStream::Ok"), {
+        if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
             return_(""),
         }));
     }
 
-    return func_(fnName, BuiltinType::Void, { argument_(thiz, ptr_(stc->declare())),
-                                              argument_(buffer->name(), type_("QByteArray")) },
+    return func_(fnName, BuiltinType::Void, { argument_(buffer->name(), ref_(type_("QByteArray", const_()))) },
                         decodeContainer);
 }
 
