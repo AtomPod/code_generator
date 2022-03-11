@@ -66,14 +66,14 @@ FunctionRef CreateEncodeFunc(StructRef stc, const char *fnName) {
     container.push_back(stream->definition()->construct(rbuffer->address()));
     for (const auto &field : personFields) {
         FieldRef nfield = std::reinterpret_pointer_cast<Field>(field);
-        container.push_back($("stream$s<<$s{};", nfield->name()));
+        container.push_back($("stream$s<<$s{}->{};", "thiz", nfield->name()));
         container.push_back(
         if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
             return_("QByteArray()"),
         }));
     }
     container.push_back(return_(buffer->name()));
-    return func_(fnName, type_("QByteArray"), {}, container);
+    return func_(fnName, type_("QByteArray"), { argument_("thiz", ptr_(stc->declare())) }, container);
 }
 
 FunctionRef CreateDecodeFunc(StructRef stc, const char *fnName) {
@@ -87,14 +87,15 @@ FunctionRef CreateDecodeFunc(StructRef stc, const char *fnName) {
     decodeContainer.push_back(stream->definition()->construct(buffer));
     for (const auto &field : personFields) {
         FieldRef nfield = std::reinterpret_pointer_cast<Field>(field);
-        decodeContainer.push_back($("stream$s>>$s{};", nfield->name()));
+        decodeContainer.push_back($("stream$s>>$s{}->{};", "thiz", nfield->name()));
         decodeContainer.push_back(
         if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
             return_(""),
         }));
     }
 
-    return func_(fnName, BuiltinType::Void, { argument_(buffer->name(), ref_(type_("QByteArray", const_()))) },
+    return func_(fnName, BuiltinType::Void, { argument_("thiz", ptr_(stc->declare())),
+                                              argument_(buffer->name(), ref_(type_("QByteArray", const_()))) },
                         decodeContainer);
 }
 
