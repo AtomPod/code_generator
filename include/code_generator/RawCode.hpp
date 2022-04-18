@@ -41,6 +41,6 @@ inline RawCodeRef _(const String &custom) {
     return RawCode::create(custom);
 }
 
-extern RawCodeRef EMPTY_LINE;
+extern CODEC_GENERATOR_API RawCodeRef EMPTY_LINE;
 
 #endif // RAWCODE_H

@@ -42,7 +42,7 @@ inline SimpleTypeRef type_(const String &codeType, TypeRef parent = nullptr) {
   return SimpleType::create(codeType, parent);
 }
 
-class BuiltinType {
+class CODEC_GENERATOR_API BuiltinType {
   public:
     static SimpleTypeRef Int;
     static SimpleTypeRef UInt;
