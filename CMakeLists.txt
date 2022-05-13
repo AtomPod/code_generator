@@ -4,7 +4,7 @@ project(code_generator)
 set(HEADERS_DIR "${PROJECT_SOURCE_DIR}/include")
 
 set(CODE_GENERATOR_SHARED_LIBRARY ${BUILD_SHARED_LIBS})
-configure_file(${HEADERS_DIR}/code_generator/Config.h.in ${HEADERS_DIR}/include/code_generator/Config.h)
+configure_file(${HEADERS_DIR}/code_generator/Config.h.in ${HEADERS_DIR}/code_generator/Config.h)
 
 # 添加fmt的header only支持
 add_definitions(-DFMT_HEADER_ONLY) 
