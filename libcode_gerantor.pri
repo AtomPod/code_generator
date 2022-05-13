@@ -1,33 +1,3 @@
-SOURCES += \
-        $$PWD/src/Argument.cpp \
-        $$PWD/src/Array.cpp \
-        $$PWD/src/Code.cpp \
-        $$PWD/src/CodeBlock.cpp \
-        $$PWD/src/CodeWriter.cpp \
-        $$PWD/src/Enum.cpp \
-        $$PWD/src/Evaluate.cpp \
-        $$PWD/src/File.cpp \
-        $$PWD/src/FlowControl.cpp \
-        $$PWD/src/Function.cpp \
-        $$PWD/src/FunctionDeclare.cpp \
-        $$PWD/src/HeaderFile.cpp \
-        $$PWD/src/IdGenerator.cpp \
-        $$PWD/src/Lit.cpp \
-        $$PWD/src/Macro.cpp \
-        $$PWD/src/NamedType.cpp \
-        $$PWD/src/Ptr.cpp \
-        $$PWD/src/RawCode.cpp \
-        $$PWD/src/Ref.cpp \
-        $$PWD/src/SimpleType.cpp \
-        $$PWD/src/StringCodeWriter.cpp \
-        $$PWD/src/StructOrUnion.cpp \
-        $$PWD/src/StructorType.cpp \
-        $$PWD/src/Type.cpp \
-        $$PWD/src/TypeDefinition.cpp \
-        $$PWD/src/TypeModifier.cpp \
-        $$PWD/src/Typedef.cpp \
-        $$PWD/src/Var.cpp \
-        $$PWD/src/While.cpp \
 
 HEADERS += \
   $$PWD/include/code_generator/Argument.hpp \
@@ -64,6 +34,7 @@ HEADERS += \
   $$PWD/include/code_generator/While.hpp \
   $$PWD/include/code_generator/Return.hpp
 
+LIBS += -L$$PWD/lib code_generator.lib
 INCLUDEPATH += $$PWD/include
 
 include($$PWD/libs/fmt/libfmt.pri)

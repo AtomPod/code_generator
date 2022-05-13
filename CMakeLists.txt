@@ -3,9 +3,9 @@ project(code_generator)
 
 set(HEADERS_DIR "${PROJECT_SOURCE_DIR}/include")
 
-option(BUILD_SHARED "build shared instead of static" ON)
+option(BUILD_SHARED "build shared instead of static" OFF)
 set(CODE_GENERATOR_SHARED_LIBRARY ${BUILD_SHARED})
-configure_file(${HEADERS_DIR}/code_generator/Config.h.in ${HEADERS_DIR}/include/code_generator/Config.h)
+configure_file(${HEADERS_DIR}/code_generator/Config.h.in ${HEADERS_DIR}/code_generator/Config.h)
 
 # 添加fmt的header only支持
 add_definitions(-DFMT_HEADER_ONLY) 
@@ -17,7 +17,7 @@ ENDIF()
 include_directories(${HEADERS_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/libs/fmt/include)
 aux_source_directory(${PROJECT_SOURCE_DIR}/src SOURCE_FILES)
-
+ 
 IF (BUILD_SHARED)
 	add_definitions(-DCODEC_GENERATOR_EXPORT)
 	add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
@@ -27,7 +27,7 @@ IF (BUILD_SHARED)
 ELSE()
 	add_library(${PROJECT_NAME} ${SOURCE_FILES})
 ENDIF()  
-  
+   
 install(TARGETS ${PROJECT_NAME} 
 		RUNTIME DESTINATION bin
 		LIBRARY DESTINATION lib
