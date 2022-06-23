@@ -9,12 +9,13 @@
 #define CODEBLOCK_HPP
 
 #include "Code.hpp"
+#include "CodeContainer.hpp"
 #include <vector>
 
 class CodeBlock : public Code
 {
   public:
-    typedef std::vector<CodeRef> CodeContainer;
+    typedef ::CodeContainer CodeContainer;
 
   public:
     CodeBlock();

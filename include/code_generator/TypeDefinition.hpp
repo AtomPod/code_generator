@@ -9,6 +9,7 @@
 #define TYPEDEFINITION_HPP
 
 #include "Type.hpp"
+#include "CodeContainer.hpp"
 #include <vector>
 
 /**
@@ -54,7 +55,7 @@ class BlockTypeDefinition : public TypeDefinition {
     static int indexToPosition(int idx, int count);
 
   public:
-    typedef std::vector<CodeRef> CodesContainer;
+    typedef ::CodeContainer CodesContainer;
 
   public:
     BlockTypeDefinition(const String &name,

@@ -38,7 +38,7 @@ class StructorTypeDeclare : public Type {
  */
 class StructorType : public BlockTypeDefinition {
   public:
-    typedef std::vector<CodeRef> MembersContainer;
+    typedef ::CodeContainer MembersContainer;
 
   public:
     static const uint16_t ID;

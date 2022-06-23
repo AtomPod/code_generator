@@ -9,6 +9,7 @@
 #define EVALUATE_HPP
 
 #include "Code.hpp"
+#include "CodeContainer.hpp"
 #include <vector>
 #include <fmt/format.h>
 #include <fmt/ranges.h>
@@ -19,7 +20,7 @@ typedef RefObject<Evaluate> EvaluateRef;
 class Evaluate : public Code
 {
 public:
-    typedef std::vector<CodeRef> CodeArguments;
+    typedef::CodeContainer CodeArguments;
 
 public:
     static const uint16_t ID;

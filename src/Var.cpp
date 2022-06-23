@@ -19,7 +19,7 @@ Var::Var(const String &name, TypeRef parent)
     : m_type (parent)
     , m_name (name)
 {
-
+  
 }
 
 VarRef Var::assign(const CodeRef &code)
@@ -49,7 +49,7 @@ VarRef Var::index(size_t idx)
     return nullptr;
 
   String idxName = fmt::format("{}[{}]", name(), idx);
-  if (idx >= array->size()) {
+  if (int32_t(idx) >= array->size()) {
     throw std::out_of_range("Var::index: out of range, value is " + idxName);
   }
 

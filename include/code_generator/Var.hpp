@@ -9,6 +9,7 @@
 #define VAR_HPP
 
 #include "NamedType.hpp"
+#include "CodeContainer.hpp"
 #include <vector>
 
 class Var;
@@ -24,7 +25,7 @@ public:
         CONSTRUCTOR
     };
 
-    typedef std::vector<CodeRef> CodeRefList;
+    typedef ::CodeContainer CodeRefList;
 
 public:
   static const uint16_t ID;
@@ -67,7 +68,7 @@ private:
 class Var : public Code, public EnableSharedRefObject<Var>
 {
 public:
-    typedef std::vector<CodeRef> CodeContainer;
+    typedef ::CodeContainer CodeContainer;
 
 public:
   static const uint16_t ID;

@@ -16,7 +16,7 @@ class File
 {
 public:
     typedef std::set<String> IncludeContainer;
-    typedef std::vector<CodeRef> CodeContainer;
+    typedef ::CodeContainer CodeContainer;
     typedef std::vector<TypeRef> TypeContainer;
 
 public:

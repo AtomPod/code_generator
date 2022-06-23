@@ -184,5 +184,5 @@ void person_decode(struct person* thiz, QByteArray buffer) {
 - [x] 代码片段复用
 - [x] 文件写入支持
 - [x] 类函数支持
-- [ ] 构造函数支持
+- [x] 构造函数支持
 - [ ] 模板支持

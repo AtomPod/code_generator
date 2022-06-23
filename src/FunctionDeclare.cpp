@@ -26,7 +26,7 @@ int FunctionType::typeWrite(Type::Dequque &leftSide, Type::Dequque &rightSide) {
   rightSide.push_back(")");
 
   for (int64_t i = int64_t(m_paramsContainer.size()) - 1; i >= 0; --i) {
-    auto param = m_paramsContainer[i];
+    auto param = m_paramsContainer[static_cast<uint32_t>(i)];
     rightSide.push_back(param->toString());
     if (i != 0) {
       rightSide.push_back("$s");

@@ -1,0 +1,12 @@
+*.obj
+*.json
+*.vcxproj
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.pdb
+*.ilk
+*.exp
+build/
