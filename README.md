@@ -60,43 +60,46 @@ FunctionRef CreateEncodeFunc(StructRef stc, const char *fnName) {
 
     auto personFields = stc->fields();
     Function::CodeContainer container;
-    container.push_back(buffer->definition());
-    container.push_back(rbuffer->definition()->construct(buffer->address()));
-    container.push_back(rbuffer->call("open", { $("QBuffer::ReadWrite") }));
-    container.push_back(stream->definition()->construct(rbuffer->address()));
+    container += {
+            buffer->definition(),
+            rbuffer->definition()->construct(buffer->address()),
+            rbuffer->call("open", { $("QBuffer::ReadWrite") }),
+            stream->definition()->construct(rbuffer->address())
+    };
     for (const auto &field : personFields) {
         FieldRef nfield = std::reinterpret_pointer_cast<Field>(field);
-        container.push_back($("stream$s<<$s{}->{};", "thiz", nfield->name()));
-        container.push_back(
-        if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
-            return_("QByteArray()"),
-        }));
+        container += {
+                $("stream$s<<$s{}->{};", "thiz", nfield->name()),
+                if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
+                    return_("QByteArray()"),
+                })
+        };
     }
-    container.push_back(return_(buffer->name()));
+    container += return_(buffer->name());
     return func_(fnName, type_("QByteArray"), { argument_("thiz", ptr_(stc->declare())) }, container);
 }
 
 FunctionRef CreateDecodeFunc(StructRef stc, const char *fnName) {
-
     auto buffer = var_("buffer", type_("QByteArray"));
     auto stream = var_("stream", type_("QDataStream"));
     auto callStatus = stream->call("status", {});
 
     auto personFields = stc->fields();
     Function::CodeContainer decodeContainer;
-    decodeContainer.push_back(stream->definition()->construct(buffer));
+    decodeContainer += (stream->definition()->construct(buffer));
     for (const auto &field : personFields) {
         FieldRef nfield = std::reinterpret_pointer_cast<Field>(field);
-        decodeContainer.push_back($("stream$s>>$s{}->{};", "thiz", nfield->name()));
-        decodeContainer.push_back(
-        if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
-            return_(""),
-        }));
+        decodeContainer += {
+                $("stream$s>>$s{}->{};", "thiz", nfield->name()),
+                if_($("{}$s!=$sQDataStream::Ok", { callStatus }), {
+                        return_(""),
+                })
+        };
     }
 
     return func_(fnName, BuiltinType::Void, { argument_("thiz", ptr_(stc->declare())),
                                               argument_(buffer->name(), ref_(type_("QByteArray", const_()))) },
-                        decodeContainer);
+                 decodeContainer);
 }
 
 void ParseStruct() {
