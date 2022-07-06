@@ -10,3 +10,4 @@
 *.ilk
 *.exp
 build/
+include/code_generator/Config.h

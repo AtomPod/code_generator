@@ -32,7 +32,8 @@ HEADERS += \
   $$PWD/include/code_generator/Types.hpp \
   $$PWD/include/code_generator/Var.hpp \
   $$PWD/include/code_generator/While.hpp \
-  $$PWD/include/code_generator/Return.hpp
+  $$PWD/include/code_generator/Return.hpp \
+  $$PWD/include/code_generator/Field.hpp 
 
 LIBS += -L$$PWD/lib code_generator.lib
 INCLUDEPATH += $$PWD/include
